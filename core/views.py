@@ -1,5 +1,5 @@
 from rest_framework import generics, viewsets
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -9,6 +9,9 @@ from helpers import send_sms, generate_time_otp
 
 
 class GetVerificationCode(generics.CreateAPIView):
+    """
+    can be used for both login and register with sms
+    """
     queryset = User.objects.all()
     serializer_class = PhoneNumberSerializer
     permission_classes = (AllowAny,)
@@ -48,6 +51,15 @@ class VerifyCode(generics.CreateAPIView):
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    """
+    update user info as see fit
+    """
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (IsAuthenticated,)
+    # allowed_methods = ('GET', 'PUT', 'DELETE', 'PATCH')
+
+    def get_permissions(self):
+        if self.action == 'create':
+            self.permission_classes = [IsAdminUser]
+        return super().get_permissions()
