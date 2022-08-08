@@ -1,11 +1,12 @@
 import pyotp
-from rest_framework import generics
-from rest_framework.permissions import AllowAny
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework import generics, viewsets
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from twilio.rest import Client
 
 from core.models import User
-from core.serializers import PhoneNumberSerializer, VerificationCodeSerializer
+from core.serializers import PhoneNumberSerializer, VerificationCodeSerializer, UserSerializer
 
 account_sid = 'AC575a5213bdead761fbf816855f02dbb6'
 auth_token = 'fbe1d0710c8dc7513107da5e7dcba255'
@@ -52,6 +53,17 @@ class VerifyCode(generics.CreateAPIView):
         verification_code = request.data['verification_code']
         user = User.objects.filter(verification_code=verification_code).first()
         if user.authenticate(verification_code):
-            return Response(dict(detail='jwt created'), status=400)
+            refresh = RefreshToken.for_user(user)
+            return Response(dict(detail={
+                'access': str(refresh.access_token),
+                'refresh': str(refresh)
+            }), status=400)
         else:
             return Response(dict(detail='Invalid code'), status=400)
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (IsAuthenticated,)
+
