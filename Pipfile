@@ -10,6 +10,8 @@ twilio = "*"
 python-decouple = "*"
 djangorestframework = "*"
 djangorestframework-simplejwt = "*"
+psycopg2-binary = "==2.8.6"
+django-on-heroku = "*"
 
 [dev-packages]
 

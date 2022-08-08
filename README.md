@@ -73,6 +73,15 @@ Project Usage
         /api/token/refresh/
 
 
+ToDo
+
+      - Uni tests
+      - Update Readme File  
+      - Postman test collection
+      - cURL examples
+      - rest api flows
+      - link to video example
+
 
 License
     

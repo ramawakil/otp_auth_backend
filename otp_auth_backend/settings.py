@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 from decouple import config
+import django_on_heroku
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from datetime import timedelta
@@ -184,3 +186,5 @@ SIMPLE_JWT = {
 TWILIO_ACCOUNT_SID = str(config('TWILIO_ACCOUNT_SID'))
 TWILIO_AUTH_TOKEN = str(config('TWILIO_AUTH_TOKEN'))
 TWILIO_PHONE_NUMBER = str(config('TWILIO_PHONE_NUMBER'))
+
+django_on_heroku.settings(locals())
