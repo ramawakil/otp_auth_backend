@@ -5,7 +5,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from core.models import User
 from core.serializers import PhoneNumberSerializer, VerificationCodeSerializer, UserSerializer
-from helpers import send_sms, generate_time_otp
+from core.helpers import send_sms, generate_time_otp
 
 
 class GetVerificationCode(generics.CreateAPIView):

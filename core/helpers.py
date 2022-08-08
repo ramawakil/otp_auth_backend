@@ -19,7 +19,7 @@ def send_sms(phone_number, message):
     )
 
 
-def generate_time_otp(user):
-    time_otp = pyotp.TOTP(user.user_key, config('TIME_OTP_DURATION', default=600))
+def generate_time_otp(user_key):
+    time_otp = pyotp.TOTP(user_key, interval=int(config('TIME_OTP_DURATION', default=600)))
     time_otp = time_otp.now()
     return time_otp
