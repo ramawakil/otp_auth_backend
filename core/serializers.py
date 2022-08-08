@@ -1,4 +1,7 @@
-from rest_framework.serializers import ModelSerializer
+from abc import ABC
+
+from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer, Serializer
 
 from .models import User
 
@@ -10,7 +13,13 @@ class CustomUserSerializer(ModelSerializer):
 
 
 class PhoneNumberSerializer(ModelSerializer):
-
     class Meta:
         model = User
         fields = ['phone']
+
+
+class VerificationCodeSerializer(ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ['verification_code']

@@ -9,6 +9,7 @@ pyotp = "*"
 twilio = "*"
 python-decouple = "*"
 djangorestframework = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 
