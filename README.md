@@ -83,6 +83,10 @@ ToDo
       - link to video example
 
 
+Issue
+
+      - psycopg2-binary library might bring some error if not tied to the version specified on pipfile (if expect to deploy on heroku)
+
 License
     
     [MIT] (https://opensource.org/licenses/mit-license.html)
