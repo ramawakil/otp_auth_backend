@@ -18,7 +18,7 @@ def send_sms(phone_number, message):
             from_=twilio_phone,
             to=phone_number
         )
-        print(message)
+        print(message.status)
         response = message.status
 
     except:

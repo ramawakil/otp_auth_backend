@@ -1,7 +1,8 @@
 import pytest
-from core.models import User
-from rest_framework import status
 from model_bakery import baker
+from rest_framework import status
+
+from core.models import User
 
 
 @pytest.fixture
@@ -41,3 +42,20 @@ class TestRetrieveAccount:
         response = api_client.get(f'/api/v1/users/{user.id}/')
 
         assert response.status_code == status.HTTP_200_OK
+
+    def test_if_user_does_not_exist_returns_404(self, api_client, authenticate_user):
+        authenticate_user(is_staff=True, is_active=True)
+        response = api_client.get('/api/v1/users/1/')
+        assert response.status_code == status.HTTP_404_NOT_FOUND
+
+
+
+@pytest.mark.django_db
+class TestGetCode:
+
+    def test_request_token_to_login_or_register(self, api_client, authenticate_user):
+        authenticate_user(is_staff=True, is_active=True)
+        response = api_client.post('/api/v1/get-code/', {'phone': '+254712345678'})
+
+        assert response.status_code == status.HTTP_201_CREATED
+
