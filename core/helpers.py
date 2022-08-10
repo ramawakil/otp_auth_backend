@@ -18,10 +18,11 @@ def send_sms(phone_number, message):
             from_=twilio_phone,
             to=phone_number
         )
+        print(message)
         response = message.status
 
-    except message.error_code:
-        response = message.error_message
+    except:
+        response = 'error'
 
     return response
 

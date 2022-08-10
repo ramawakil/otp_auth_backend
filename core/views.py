@@ -19,17 +19,17 @@ class GetVerificationCode(generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         phone_number = request.data['phone']
         user, created = User.objects.get_or_create(phone=phone_number)
-        time_otp = generate_time_otp(user)
+        time_otp = generate_time_otp(user.user_key)
         user.verification_code = time_otp
         user.save()
 
         if created:
             message = send_sms(phone_number, f"Your verification code is {time_otp}")
-            return Response(dict(detail=f'SMS {message.status}'), status=201)
+            return Response(dict(detail=f'SMS {message}'), status=201)
 
         else:
             message = send_sms(phone_number, f"Your verification code is {time_otp}")
-            return Response(dict(detail=f'SMS {message.status}'), status=201)
+            return Response(dict(detail=f'SMS {message}'), status=201)
 
 
 class VerifyCode(generics.CreateAPIView):
