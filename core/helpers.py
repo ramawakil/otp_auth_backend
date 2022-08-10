@@ -22,6 +22,7 @@ def send_sms(phone_number, message):
         response = message.status
 
     except:
+        # as simple as it is this error will be helpful to know if twilio implementation is not working
         response = 'error'
 
     return response
