@@ -49,13 +49,12 @@ class TestRetrieveAccount:
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
 
-
 @pytest.mark.django_db
-class TestGetCode:
+class TestAuthenticateAccount:
 
     def test_request_token_to_login_or_register(self, api_client, authenticate_user):
         authenticate_user(is_staff=True, is_active=True)
         response = api_client.post('/api/v1/get-code/', {'phone': '+254712345678'})
 
         assert response.status_code == status.HTTP_201_CREATED
-
+        assert 'SMS' in str(response.data['detail'])
