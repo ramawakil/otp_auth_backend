@@ -75,7 +75,7 @@ Project Usage
 
 ToDo
 
-      - Uni tests
+      - Unit tests
       - Update Readme File  
       - Postman test collection
       - cURL examples
